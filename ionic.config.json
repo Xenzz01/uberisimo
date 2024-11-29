@@ -1,0 +1,7 @@
+{
+  "name": "uberisimo",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
