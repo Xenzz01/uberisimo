@@ -5,9 +5,16 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">agregar-vehiculo</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-list>
+    <ion-item>
+      <ion-input [(ngModel)]="marca" label="Marca"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input [(ngModel)]="modelo" label="Modelo"></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <ion-button (click)="takePhoto()" >
+    Agrega Imagen
+  </ion-button>
 </ion-content>
