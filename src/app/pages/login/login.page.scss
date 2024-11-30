@@ -1,0 +1,12 @@
+.box{
+    background-color: rgb(41, 75, 83); 
+    display: flex;
+    flex-direction: column;
+    border: solid purple;
+    height: 100%;
+    justify-content: center;
+
+    ion-button{
+        margin-top: 40px;
+    }
+}
