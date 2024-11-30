@@ -41,6 +41,18 @@ const routes: Routes = [
     path: 'viaje',
     loadChildren: () => import('./pages/viaje/viaje.module').then( m => m.ViajePageModule)
   },
+  {
+    path: 'agregar-vehiculo',
+    loadChildren: () => import('./pages/agregar-vehiculo/agregar-vehiculo.module').then( m => m.AgregarVehiculoPageModule)
+  },
+  {
+    path: 'agregar-viaje',
+    loadChildren: () => import('./pages/agregar-viaje/agregar-viaje.module').then( m => m.AgregarViajePageModule)
+  },
+  {
+    path: 'listar-vehiculo',
+    loadChildren: () => import('./pages/listar-vehiculo/listar-vehiculo.module').then( m => m.ListarVehiculoPageModule)
+  },
 ];
 
 @NgModule({
