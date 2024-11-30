@@ -109,11 +109,11 @@ export class LoginPage implements OnInit {
     }
   
     resetPw(){
-      this.router.navigateByUrl("reset-password");
+      this.router.navigateByUrl("/recpass");
     }
   
     registro(){
-      this.router.navigateByUrl("registro");
+      this.router.navigateByUrl("/registro");
     }
 
 }
