@@ -1,13 +1,76 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>viaje</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Viajes</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">viaje</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-list>
+    <ion-item *ngFor="let viaje of viajes">
+      <ion-label>
+        <h2>{{ viaje.ubicacion_origen }} → {{ viaje.ubicacion_destino }}</h2>
+        <p>Costo: ${{ viaje.costo }}</p>
+      </ion-label>
+      <ion-button slot="end" (click)="detalles(viaje)">
+        <ion-icon [name]="viaje.showDetails ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon>
+      </ion-button>
+
+      <ion-grid *ngIf="viaje.showDetails">
+        <ion-row>
+          <ion-col>
+            <ion-label>Fecha: {{ viaje.fecha | date: 'medium' }}</ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-label>Estado del Viaje: {{ viaje.id_estado }}</ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-label>Patente del Vehículo: {{ viaje.patente }}</ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-label>Marca del Vehículo: {{ viaje.marca }}</ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-label>Modelo del Vehículo: {{ viaje.modelo }}</ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-label>Color del Vehículo: {{ viaje.color }}</ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-label>Combustible: {{ viaje.tipo_combustible }}</ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-label>Capacidad de Pasajeros: {{ viaje.capacidad_pasajeros }}</ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-img [src]="viaje.imagen_vehiculo"></ion-img>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+    <ion-fab-button [routerLink]="['/agregar-viaje']">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>
