@@ -7,9 +7,7 @@ const routes: Routes = [
     redirectTo: 'login',
     pathMatch: 'full'
   },
-  {
-    
-  },
+ 
   {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
@@ -18,10 +16,7 @@ const routes: Routes = [
     path: 'perfil',
     loadChildren: () => import('./pages/perfil/perfil.module').then( m => m.PerfilPageModule)
   },
-  {
-    path: 'recpass',
-    loadChildren: () => import('./pages/recpass/recpass.module').then( m => m.RecpassPageModule)
-  },
+  
   {
     path: 'viajes',
     loadChildren: () => import('./pages/viajes/viajes.module').then( m => m.ViajesPageModule)
@@ -41,6 +36,14 @@ const routes: Routes = [
   {
     path: 'registro',
     loadChildren: () => import('./pages/registro/registro.module').then( m => m.RegistroPageModule)
+  },
+  {
+    path: 'rec-pass',
+    loadChildren: () => import('./pages/rec-pass/rec-pass.module').then( m => m.RecPassPageModule)
+  },
+  {
+    path: 'viaje',
+    loadChildren: () => import('./pages/viaje/viaje.module').then( m => m.ViajePageModule)
   },
 ];
 

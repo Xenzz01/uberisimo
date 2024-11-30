@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { RecpassPageRoutingModule } from './recpass-routing.module';
+import { ViajePageRoutingModule } from './viaje-routing.module';
 
-import { RecpassPage } from './recpass.page';
+import { ViajePage } from './viaje.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    RecpassPageRoutingModule
+    ViajePageRoutingModule
   ],
-  declarations: [RecpassPage]
+  declarations: [ViajePage]
 })
-export class RecpassPageModule {}
+export class ViajePageModule {}

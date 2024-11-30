@@ -1,13 +1,39 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>modPerfil</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Editar Perfil</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">modPerfil</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-avatar>
+        <img src="https://ionicframework.com/docs/img/demos/avatar.svg" alt="Foto de perfil">
+      </ion-avatar>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form>
+        <ion-item>
+          <ion-label position="floating">Nombre Completo</ion-label>
+          <ion-input placeholder="Nombre Completo"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Correo Electrónico</ion-label>
+          <ion-input placeholder="Correo Electrónico"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Número de Teléfono</ion-label>
+          <ion-input placeholder="Número de Teléfono"></ion-input>
+        </ion-item>
+
+        <ion-button expand="full" class="custom-yellow-button">Guardar Cambios</ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
