@@ -15,6 +15,8 @@ export class AgregarViajePage implements OnInit {
   ubicacionDestino: string = '';
   idVehiculoSeleccionado: number = 0; 
   vehiculos: any[] = []; 
+  storageService: any;
+  vehiculoService: any;
 
   constructor(
     private viajeService: ViajeService,
@@ -28,15 +30,24 @@ export class AgregarViajePage implements OnInit {
   }
 
   async cargarVehiculos() {
-    
-    const dataStorage = await this.storage.obtenerStorage();
-    const token = dataStorage[0].token;
-    const usuarioId = dataStorage[0].usuario_id;
-
-    
-    const req = await this.carService.obtenerVehiculo(token);
-    if (req && req.data) {
-      this.vehiculos = req.data;
+    try {
+      const token = await this.storageService.obtenerToken();
+      if (!token) {
+        console.error('Token no encontrado, redirigiendo al login.');
+        return;
+      }
+  
+      const req = await this.vehiculoService.obtenerVehiculo({ token });
+      console.log('Respuesta de vehículos:', req);
+  
+      if (Array.isArray(req) && req.length > 0) {
+        this.vehiculos = req; // Asignar directamente el array
+      } else {
+        console.warn('No se encontraron vehículos.');
+        this.vehiculos = [];
+      }
+    } catch (error) {
+      console.error('Error al cargar los vehículos:', error);
     }
   }
 

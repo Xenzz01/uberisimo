@@ -11,6 +11,7 @@ import { StorageService } from 'src/app/services/storage.service'; // Importa el
 })
 export class VehiculoPage implements OnInit {
   vehiculos: any[] = [];
+  storageService: any;
 
   constructor(
     private router: Router,
@@ -24,23 +25,29 @@ export class VehiculoPage implements OnInit {
 
   async cargarVehiculos() {
     try {
-      // Obtener datos de almacenamiento local
-      let dataStorage = await this.storage.obtenerStorage();
-      const token = dataStorage[0].token;
-      const usuarioId = dataStorage[0].usuario_id;
-
-      // Llamar al servicio para obtener los vehículos
-      const req = await this.vehiculoService.obtenerVehiculo(token);
-
-      if (req && req.data) {
-        // Asignar los vehículos obtenidos y agregar una propiedad showDetails para la visualización
-        this.vehiculos = req.data.map((vehiculo: any) => ({
-          ...vehiculo,
-          showDetails: false // Añadir una propiedad para mostrar los detalles
+      const token = await this.storageService.obtenerToken();
+      if (!token) {
+        console.error('Token no encontrado, redirigiendo al login.');
+        return;
+      }
+  
+      const req = await this.vehiculoService.obtenerVehiculo({
+        token,
+        p_correo: ''
+      });
+      console.log('Respuesta de vehículos:', req);
+  
+      if (Array.isArray(req) && req.length > 0) {
+        this.vehiculos = req.map((vehiculo: any) => ({
+          id: vehiculo.id,
+          marca: vehiculo.marca,
+          modelo: vehiculo.modelo,
+          color: vehiculo.color,
+          anio: vehiculo.anio,
         }));
-        console.log("DATA VEHICULOS OBTENIDOS", this.vehiculos);
       } else {
-        console.error('No se encontraron datos de vehículos.');
+        console.warn('No se encontraron vehículos.');
+        this.vehiculos = [];
       }
     } catch (error) {
       console.error('Error al cargar los vehículos:', error);
@@ -48,7 +55,7 @@ export class VehiculoPage implements OnInit {
   }
 
   agregarVehiculo() {
-    // Navegar a la vista para agregar un nuevo vehículo
+    
     this.router.navigateByUrl('/listar-vehiculo');
   }
 

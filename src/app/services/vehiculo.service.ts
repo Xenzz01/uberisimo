@@ -4,66 +4,74 @@ import { environment } from 'src/environments/environment';
 import { lastValueFrom } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class VehiculoService {
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
-
-  async agregarVehiculo(datosVehiculo:dataBodyAuto, imgFileUser:any, ){
+  
+  async agregarVehiculo(datosVehiculo: dataBodyAuto, imgFileUser: any) {
     try {
-      const formData = new FormData();
+      if (!datosVehiculo.token) {
+        throw new Error('El token es requerido para agregar un vehículo.');
+      }
 
+      const formData = new FormData();
       formData.append('p_id_vehiculo', datosVehiculo.p_id_vehiculo.toString());
-      formData.append('p_marca',datosVehiculo.marca);
-      formData.append('p_modelo ', datosVehiculo.modelo);
+      formData.append('p_marca', datosVehiculo.marca);
+      formData.append('p_modelo', datosVehiculo.modelo);
       formData.append('p_color', datosVehiculo.color);
       formData.append('p_patente', datosVehiculo.patente);
       formData.append('p_anio', datosVehiculo.anio.toString());
       formData.append('p_tipo_de_combustible', datosVehiculo.tipo_combustible);
-      if (datosVehiculo.token) {
-        formData.append('token',datosVehiculo.token);
-      }
-  
+      formData.append('token', datosVehiculo.token);
       formData.append('image_usuario', imgFileUser.file, imgFileUser.name);
-  
-      const response = await lastValueFrom(this.http.post<any>(environment.apiUrl + 'vehiculo/obtener',formData));
+
+      const response = await lastValueFrom(
+        this.http.post<any>(environment.apiUrl + 'vehiculo/agregar', formData)
+      );
       return response;
-      
     } catch (error) {
+      console.error('Error al agregar el vehículo:', error);
       throw error;
     }
-
   }
+
   
-  async obtenerVehiculo(data:dataGetUser){
+  async obtenerVehiculo(data: dataGetUser) {
     try {
-      const params = {
-        
-        token:data.token
+      if (!data.token) {
+        throw new Error('El token es requerido para obtener vehículos.');
       }
-      const response = await lastValueFrom(this.http.get<any>(environment.apiUrl + 'vehiculo/obtener',{params}));
+
+      const params = {
+        token: data.token,
+      };
+
+      const response = await lastValueFrom(
+        this.http.get<any>(environment.apiUrl + 'vehiculo/obtener', { params })
+      );
       return response;
     } catch (error) {
+      console.error('Error al obtener los vehículos:', error);
       throw error;
     }
   }
-
 }
 
 
-interface dataBodyAuto{
+interface dataBodyAuto {
   p_id_vehiculo: number;
-  patente:string;
-  marca:string;
-  modelo:string;
-  anio:number;
-  color:string;
-  tipo_combustible:string;
-  token?:string;
+  patente: string;
+  marca: string;
+  modelo: string;
+  anio: number;
+  color: string;
+  tipo_combustible: string;
+  token?: string;
 }
 
-interface dataGetUser{
-  p_correo:string;
-  token:string;
+interface dataGetUser {
+  p_correo: string;
+  token: string;
 }
