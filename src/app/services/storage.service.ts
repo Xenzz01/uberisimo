@@ -4,18 +4,18 @@ import { Preferences } from '@capacitor/preferences';
 const llaveUber = "llaveAplicacionUber";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class StorageService {
-
   constructor() {}
 
   // Guardar un item genérico
   async setItem(llave: string, valor: string): Promise<void> {
     try {
       await Preferences.set({ key: llave, value: valor });
+      console.log(`Item guardado: [${llave}] = ${valor}`);
     } catch (error) {
-      console.error(`Error al guardar el item [${llave}] en el almacenamiento:`, error);
+      console.error("Error al guardar el item en el almacenamiento:", error);
     }
   }
 
@@ -34,6 +34,7 @@ export class StorageService {
   async agregarToken(dataJson: any): Promise<void> {
     try {
       await this.setItem(llaveUber, JSON.stringify(dataJson));
+      console.log("Token agregado correctamente:", dataJson);
     } catch (error) {
       console.error("Error al agregar el token:", error);
     }
@@ -55,6 +56,23 @@ export class StorageService {
     }
   }
 
+  // Obtener toda la información almacenada bajo la llave principal
+  async obtenerStorage(): Promise<any[]> {
+    try {
+      const storageData = await this.getItem(llaveUber);
+      if (!storageData) {
+        console.warn("No se encontró información en el almacenamiento.");
+        return [];
+      }
+      const parsedData = JSON.parse(storageData);
+      console.log("Datos recuperados del almacenamiento:", parsedData);
+      return Array.isArray(parsedData) ? parsedData : [parsedData]; // Devuelve como array para mantener compatibilidad
+    } catch (error) {
+      console.error("Error al obtener datos del almacenamiento:", error);
+      return [];
+    }
+  }
+
   // Eliminar el token específico
   async eliminarToken(): Promise<void> {
     try {
@@ -65,7 +83,13 @@ export class StorageService {
     }
   }
 
-  async obtenerStorage(): Promise<any> {
-    
+  // Limpiar todo el almacenamiento
+  async clearStorage(): Promise<void> {
+    try {
+      await Preferences.clear();
+      console.log("Almacenamiento limpiado correctamente.");
+    } catch (error) {
+      console.error("Error al limpiar el almacenamiento:", error);
+    }
   }
 }
